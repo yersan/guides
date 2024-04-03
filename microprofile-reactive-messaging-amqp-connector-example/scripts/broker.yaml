@@ -1,0 +1,30 @@
+apiVersion: broker.amq.io/v1beta1
+kind: ActiveMQArtemis
+metadata:
+  name: amq-broker
+  application: amq-broker-app
+spec:
+  acceptors:
+    - port: 61617
+      verifyHost: false
+      needClientAuth: true
+      expose: true
+      multicastPrefix: jms.topic.
+      name: all
+      connectionsAllowed: 10
+      sslEnabled: true
+      protocols: all
+      sslSecret: brokeramqp-ssl-secret
+      sslProvider: JDK
+      anycastPrefix: jms.queue.
+  console:
+    expose: true
+  deploymentPlan:
+    journalType: nio
+    messageMigration: false
+    persistenceEnabled: false
+    requireLogin: false
+    size: 1
+  upgrades:
+    enabled: false
+    minor: false
