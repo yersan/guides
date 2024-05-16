@@ -1,0 +1,8 @@
+batch
+/subsystem=elytron/key-store=truststore-ssl-test:add(credential-reference={clear-text=changeit}, path=<path-to>/client.ts, type=PKCS12)
+/subsystem=elytron/trust-manager=truststore-ssl-test:add(key-store=truststore-ssl-test)
+/subsystem=elytron/key-store=keystore-ssl-test:add(credential-reference={clear-text=changeit}, path=<path-to>/client.ks, type=PKCS12)
+/subsystem=elytron/key-manager=keystore-ssl-test:add(key-store=keystore-ssl-test,credential-reference={clear-text=changeit})
+/subsystem=elytron/client-ssl-context=amqp-ssl-context:add(trust-manager=truststore-ssl-test,key-manager=keystore-ssl-test)
+run-batch
+
