@@ -1,0 +1,5 @@
+/socket-binding-group=standard-sockets/remote-destination-outbound-socket-binding=remote-activemq-socket-binding:add(host=${artemis.host:0.0.0.0},port=${artemis.port:61616})
+/subsystem=messaging-activemq/remote-connector=remote-activemq:add(socket-binding=remote-activemq-socket-binding)
+/subsystem=messaging-activemq/pooled-connection-factory=remote-activemq-pcf:add(connectors=[remote-activemq],entries=["java:/jms/remote/activemqPCF"],user="artemis",password="123PIPPOBAUDO")
+/subsystem=messaging-activemq/external-jms-queue=testQueue:add(entries=["java:/jms/remote/testQueue"])
+/subsystem=ejb3:write-attribute(name=default-resource-adapter-name,value=remote-activemq-pcf)
