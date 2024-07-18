@@ -36,7 +36,7 @@
 
         <!-- JBoss dependency versions -->
         <version.wildfly.maven.plugin>5.0.0.Final</version.wildfly.maven.plugin>
-        <version.wildfly.bom>32.0.0.Final</version.wildfly.bom>
+        <version.wildfly.bom>32.0.1.Final</version.wildfly.bom>
 
         <!--Use JUnit 5 here - the WildFly bom still brings 4.x -->
         <version.junit5>5.10.1</version.junit5>
@@ -44,7 +44,7 @@
         <!-- other plugin versions -->
         <version.compiler.plugin>3.13.0</version.compiler.plugin>
         <version.surefire.plugin>3.0.0</version.surefire.plugin>
-        <version.failsafe.plugin>3.2.5</version.failsafe.plugin>
+        <version.failsafe.plugin>3.3.0</version.failsafe.plugin>
         <version.war.plugin>3.4.0</version.war.plugin>
 
         <!-- maven-compiler-plugin -->
@@ -129,7 +129,7 @@
             <dependency>
                 <groupId>org.junit</groupId>
                 <artifactId>junit-bom</artifactId>
-                <version>5.10.1</version>
+                <version>${version.junit5}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -163,13 +163,6 @@
             <artifactId>jakarta.ejb-api</artifactId>
             <scope>provided</scope>
         </dependency>
-
-        <!--<dependency>
-            <groupId>org.jboss.ejb3</groupId>
-            <artifactId>jboss-ejb3-ext-api</artifactId>
-            <version>2.4.0.Final</version>
-            <scope>provided</scope>
-        </dependency>-->
 
         <!-- Test scope dependencies -->
         <dependency>
@@ -239,17 +232,10 @@
                         <!-- layers may be used to customize the server to provision-->
                         <layer>cloud-server</layer>
                         <!-- Support for connections to a remote JMS broker -->
-                        <layer>messaging-activemq</layer>
+                        <layer>remote-activemq</layer>
                         <!-- For the MDB -->
                         <layer>ejb</layer>
                     </layers>
-                    <packaging-scripts>
-                        <packaging-script>
-                            <scripts>
-                                <script>script/activemq.cli</script>
-                            </scripts>
-                        </packaging-script>
-                    </packaging-scripts>
                 </configuration>
                 <executions>
                     <execution>
