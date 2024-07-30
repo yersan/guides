@@ -1,6 +1,7 @@
-= simple-microservice-database
 
-The `simple-microservice-database` project is a simple Jakarta EE application with a HTTP endpoint that is running in
+= getting-started
+
+The `getting-started` project is a simple Jakarta EE application with a HTTP endpoint that is running in
 https://wildfly.org[WildFly].
 
 The `src/main` folder contains a simple 'Hello world' style Jakarta EE application using JAX-RS.
@@ -16,18 +17,6 @@ mvn clean package
 
 Maven will compile the application, provision a WildFly server
 The WildFly server is created in `target/server` with the application deployed in it.
-
-== PostgreSQL
-
-[source,shell]
-----
-podman run --rm --name my-postgres \
-    -p 5432:5432 \
-    -e POSTGRES_PASSWORD=admin \
-    -e POSTGRES_USER=postgres \
-    -e POSTGRES_DB=postgres \
-    docker.io/library/postgres
-----
 
 == Running the application
 
@@ -51,51 +40,6 @@ mvn clean package verify
 ----
 
 Tests in `src/test` are run against the server in `target/server`.
-
-== Build the Docker Image
-
-[source,shell]
-----
-podman build -t my-jaxrs-app-db:latest .
-----
-
-== Run the Docker Image
-[source,shell]
-----
-podman run --rm -p 8080:8080 -p 9990:9990 \
-    -e POSTGRESQL_USER=postgres \
-    -e POSTGRESQL_PASSWORD=admin \
-    -e POSTGRESQL_HOST=192.168.1.43 \
-    -e POSTGRESQL_PORT=5432 \
-    -e POSTGRESQL_DATABASE=postgres \
-    -e POSTGRESQL_JNDI=java:jboss/datasources/PostgreSQLDS \
-    --name=my-jaxrs-app-db \
-    my-jaxrs-app-db:latest
-----
-
-== Check the application
-
-[source,shell]
-----
-curl http://127.0.0.1:8080/hello/pippo
-----
-
-== Check Liveness, Readiness and Startup Probes
-
-[source,shell]
-----
-curl http://127.0.0.1:9990/health/live
-----
-
-[source,shell]
-----
-curl http://127.0.0.1:9990/health/ready
-----
-
-[source,shell]
-----
-curl http://127.0.0.1:9990/health/started
-----
 
 == Resources
 

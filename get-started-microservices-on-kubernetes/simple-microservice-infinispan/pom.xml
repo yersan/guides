@@ -20,12 +20,12 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.wildfly.examples</groupId>
-    <artifactId>simple-microservice-infinispan</artifactId>
+    <artifactId>getting-started</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 
     <packaging>war</packaging>
-    <name>simple-microservice-infinispan</name>
-    <description>Java Microservices on Kubernetes wih WildFly: Infinispan</description>
+    <name>getting-started</name>
+    <description>Insert description for your project here.</description>
 
     <properties>
         <!-- Explicitly declaring the source encoding eliminates the following
@@ -152,12 +152,6 @@
             <scope>provided</scope>
         </dependency>
 
-        <dependency>
-            <groupId>jakarta.servlet</groupId>
-            <artifactId>jakarta.servlet-api</artifactId>
-            <scope>provided</scope>
-        </dependency>
-
         <!-- Test scope dependencies -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -218,22 +212,11 @@
                         <feature-pack>
                             <location>org.wildfly:wildfly-galleon-pack:${version.wildfly.bom}</location>
                         </feature-pack>
-                        <feature-pack>
-                            <location>org.wildfly.cloud:wildfly-cloud-galleon-pack:7.0.0.Final</location>
-                        </feature-pack>
                     </feature-packs>
                     <layers>
                         <!-- layers may be used to customize the server to provision-->
                         <layer>cloud-server</layer>
-                        <layer>web-clustering</layer>
                     </layers>
-                    <packaging-scripts>
-                        <packaging-script>
-                            <scripts>
-                                <script>infinispan.cli</script>
-                            </scripts>
-                        </packaging-script>
-                    </packaging-scripts>
                 </configuration>
                 <executions>
                     <execution>
