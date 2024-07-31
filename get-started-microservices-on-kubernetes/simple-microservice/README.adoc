@@ -41,6 +41,30 @@ mvn clean package verify
 
 Tests in `src/test` are run against the server in `target/server`.
 
+== Build Docker image
+
+[source,shell]
+----
+podman build -t my-jaxrs-app:latest .
+----
+
+== Run Docker image
+
+[source,shell]
+----
+podman run --rm -p 8080:8080 -p 9990:9990 \
+  --name=my-jaxrs-app \
+  my-jaxrs-app
+----
+
+== Deploy to Kubernetes
+
+[source,shell]
+----
+kubectl apply -f deployment-my-jaxrs-app.yaml
+kubectl expose deployment.apps/my-jaxrs-app-deployment --type=NodePort --port=8080
+----
+
 == Resources
 
 * https://wildfly.org[WildFly]

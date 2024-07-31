@@ -20,11 +20,11 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.wildfly.examples</groupId>
-    <artifactId>getting-started</artifactId>
+    <artifactId>simple-microservice-database</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 
     <packaging>war</packaging>
-    <name>getting-started</name>
+    <name>simple-microservice-database</name>
     <description>Insert description for your project here.</description>
 
     <properties>
@@ -176,6 +176,22 @@
             <artifactId>resteasy-client</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>jakarta.persistence</groupId>
+            <artifactId>jakarta.persistence-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.xml.bind</groupId>
+            <artifactId>jakarta.xml.bind-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.transaction</groupId>
+            <artifactId>jakarta.transaction-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -212,10 +228,17 @@
                         <feature-pack>
                             <location>org.wildfly:wildfly-galleon-pack:${version.wildfly.bom}</location>
                         </feature-pack>
+                        <feature-pack>
+                            <location>org.wildfly.cloud:wildfly-cloud-galleon-pack:7.0.0.Final</location>
+                        </feature-pack>
+                        <feature-pack>
+                            <location>org.wildfly:wildfly-datasources-galleon-pack:8.0.0.Final</location>
+                        </feature-pack>
                     </feature-packs>
                     <layers>
                         <!-- layers may be used to customize the server to provision-->
                         <layer>cloud-server</layer>
+                        <layer>postgresql-datasource</layer>
                     </layers>
                 </configuration>
                 <executions>
