@@ -41,27 +41,47 @@ mvn clean package verify
 
 Tests in `src/test` are run against the server in `target/server`.
 
+== Start Artemis
+
+[source,shell]
+----
+podman network create demo-network
+
+podman run --rm --name my-artemis \
+    --network=demo-network \
+    -p 8161:8161 \
+    -p 61616:61616\
+    -e AMQ_USER=admin \
+    -e AMQ_PASSWORD=admin \
+    -e AMQ_DATA_DIR=//home/jboss/data \
+    quay.io/artemiscloud/activemq-artemis-broker-kubernetes:latest
+----
+
 == Build Docker image
 
 [source,shell]
 ----
-podman build -t my-jaxrs-app:latest .
+podman build -t my-jms-app:latest .
 ----
 
 == Run Docker image
 
 [source,shell]
 ----
-podman run --rm -p 8080:8080 -p 9990:9990 \
-  --name=my-jaxrs-app \
-  my-jaxrs-app
+podman run --rm --network=demo-network -p 8080:8080 -p 9990:9990 \
+    --name=my-jms-app \
+    -e JBOSS_MESSAGING_CONNECTOR_HOST=my-artemis \
+    my-jms-app:latest
 ----
 
 == Deploy to Kubernetes
 
 [source,shell]
 ----
-kubectl apply -f deployment-my-jaxrs-app.yaml
+kubectl apply -f artemis-deployment.yaml
+kubectl apply -f artemis-service.yaml
+kubectl apply -f deployment-my-jms-app.yaml
+kubectl expose deployment.apps/my-jms-app-deployment --type=NodePort --port=8080
 ----
 
 == Resources
