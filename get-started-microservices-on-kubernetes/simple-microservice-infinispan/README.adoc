@@ -41,27 +41,50 @@ mvn clean package verify
 
 Tests in `src/test` are run against the server in `target/server`.
 
+== Start Infinispan Server
+
+[source,shell]
+----
+sudo podman network create demo-network
+
+sudo podman run --rm --network=demo-network --name=my-infinispan \
+-p 11222:11222 \
+-e USER="admin" \
+-e PASS="123pippobaudo" \
+quay.io/infinispan/server:latest
+----
+
+NOTE: "sudo" is required when running infinispan using podman
+
 == Build Docker image
 
 [source,shell]
 ----
-podman build -t my-jaxrs-app:latest .
+podman build -t my-jaxrs-app-infinispan:latest .
 ----
 
 == Run Docker image
 
 [source,shell]
 ----
-podman run --rm -p 8080:8080 -p 9990:9990 \
-  --name=my-jaxrs-app \
-  my-jaxrs-app
+podman run --rm --network=demo-network -p 8080:8080 -p 9990:9990 \
+    -e INFINISPAN_SERVER_HOST=my-infinispan \
+    -e INFINISPAN_SERVER_PORT=11222 \
+    -e INFINISPAN_SERVER_USER=admin \
+    -e INFINISPAN_SERVER_PASSWORD=123pippobaudo \
+    --name=my-jaxrs-app-infinispan \
+    my-jaxrs-app-infinispan:latest
 ----
 
 == Deploy to Kubernetes
 
 [source,shell]
 ----
-kubectl apply -f deployment-my-jaxrs-app.yaml
+kubectl apply -f infinispan-configmap.yaml
+kubectl apply -f infinispan-deployment.yaml
+kubectl apply -f infinispan-service.yaml
+kubectl apply -f deployment-my-jaxrs-app-infinispan.yaml
+kubectl expose deployment.apps/my-jaxrs-app-infinispan-deployment --type=NodePort --port=8080
 ----
 
 == Resources
