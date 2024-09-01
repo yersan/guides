@@ -1,8 +1,10 @@
 
-= getting-started
+= simple-microservice-database
 
-The `getting-started` project is a simple Jakarta EE application with a HTTP endpoint that is running in
+The `simple-microservice-database` project is a simple Jakarta EE application with a HTTP endpoint that is running in
 https://wildfly.org[WildFly].
+
+The `simple-microservice-database` project stores data in an external PostgreSQL database.
 
 The `src/main` folder contains a simple 'Hello world' style Jakarta EE application using JAX-RS.
 
@@ -81,10 +83,10 @@ podman run --rm --network=demo-network -p 8080:8080 -p 9990:9990 \
 
 [source,shell]
 ----
-kubectl apply -f postgres-configmap.yaml
-kubectl apply -f postgres-deployment.yaml
-kubectl apply -f postgres-service.yaml
-kubectl apply -f deployment-my-jaxrs-app-db.yaml
+kubectl apply -f kubernetes/postgres-configmap.yaml
+kubectl apply -f kubernetes/postgres-deployment.yaml
+kubectl apply -f kubernetes/postgres-service.yaml
+kubectl apply -f kubernetes/deployment-my-jaxrs-app-db.yaml
 kubectl expose deployment.apps/my-jaxrs-app-db-deployment --type=NodePort --port=8080
 ----
 

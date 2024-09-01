@@ -1,8 +1,10 @@
 
-= getting-started
+= simple-microservice-infinispan
 
-The `getting-started` project is a simple Jakarta EE application with a HTTP endpoint that is running in
+The `simple-microservice-infinispan` project is a simple Jakarta EE application with a HTTP endpoint that is running in
 https://wildfly.org[WildFly].
+
+The `simple-microservice-infinispan` project stores session data in an external Infinispan Server.
 
 The `src/main` folder contains a simple 'Hello world' style Jakarta EE application using JAX-RS.
 
@@ -80,10 +82,10 @@ podman run --rm --network=demo-network -p 8080:8080 -p 9990:9990 \
 
 [source,shell]
 ----
-kubectl apply -f infinispan-configmap.yaml
-kubectl apply -f infinispan-deployment.yaml
-kubectl apply -f infinispan-service.yaml
-kubectl apply -f deployment-my-jaxrs-app-infinispan.yaml
+kubectl apply -f kubernetes/infinispan-configmap.yaml
+kubectl apply -f kubernetes/infinispan-deployment.yaml
+kubectl apply -f kubernetes/infinispan-service.yaml
+kubectl apply -f kubernetes/deployment-my-jaxrs-app-infinispan.yaml
 kubectl expose deployment.apps/my-jaxrs-app-infinispan-deployment --type=NodePort --port=8080
 ----
 

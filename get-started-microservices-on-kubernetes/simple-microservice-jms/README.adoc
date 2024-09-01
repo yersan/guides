@@ -1,8 +1,11 @@
 
-= getting-started
+= simple-microservice-jms
 
-The `getting-started` project is a simple Jakarta EE application with a HTTP endpoint that is running in
+The `simple-microservice-jms` project is a simple Jakarta EE application with a HTTP endpoint that is running in
 https://wildfly.org[WildFly].
+
+The `simple-microservice-jms` project sends messages to an Artemis JMS Broker and then consumes those messages using
+a Message Driven Bean.
 
 The `src/main` folder contains a simple 'Hello world' style Jakarta EE application using JAX-RS.
 
@@ -78,9 +81,9 @@ podman run --rm --network=demo-network -p 8080:8080 -p 9990:9990 \
 
 [source,shell]
 ----
-kubectl apply -f artemis-deployment.yaml
-kubectl apply -f artemis-service.yaml
-kubectl apply -f deployment-my-jms-app.yaml
+kubectl apply -f kubernetes/artemis-deployment.yaml
+kubectl apply -f kubernetes/artemis-service.yaml
+kubectl apply -f kubernetes/deployment-my-jms-app.yaml
 kubectl expose deployment.apps/my-jms-app-deployment --type=NodePort --port=8080
 ----
 

@@ -1,7 +1,7 @@
 
-= getting-started
+= simple-microservice
 
-The `getting-started` project is a simple Jakarta EE application with a HTTP endpoint that is running in
+The `simple-microservice` project is a simple Jakarta EE application with a HTTP endpoint that is running in
 https://wildfly.org[WildFly].
 
 The `src/main` folder contains a simple 'Hello world' style Jakarta EE application using JAX-RS.
@@ -61,7 +61,7 @@ podman run --rm -p 8080:8080 -p 9990:9990 \
 
 [source,shell]
 ----
-kubectl apply -f deployment-my-jaxrs-app.yaml
+kubectl apply -f kubernetes/deployment-my-jaxrs-app.yaml
 kubectl expose deployment.apps/my-jaxrs-app-deployment --type=NodePort --port=8080
 ----
 
